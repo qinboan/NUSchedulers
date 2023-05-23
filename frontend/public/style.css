@@ -1,0 +1,53 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Comissioner';
+    background: #fef5ff;
+}
+
+.NUSchedulers {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Chewy'; font-size: 22px;
+}
+
+.login{
+    font-family: 'Commissioner'; font-size: 22px;;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login input[type="username"], input[type="password"] {
+    border: none;
+    border-bottom: 1px solid black;
+    background: #f6f6f6;
+    outline: black;
+    height: 50px;
+    width: 200px;
+}
+
+.login input[type="submit"] {
+    background: #06ffd2;
+    height: 60px;
+    width: 240px;
+    border-radius: 25px;
+}
+
+.login a {
+    color: #9DA3A2;
+    border-bottom: transparent;
+    outline: transparent;
+    font-size: 15px;
+}
+
+.login button {
+    background: #06f0ff;
+    height: 60px;
+    width: 240px;
+    border-radius: 25px;
+}
+
