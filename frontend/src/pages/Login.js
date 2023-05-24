@@ -3,9 +3,14 @@ import { Navigate } from "react-router-dom";
 
 function Login() {
     const [goCreateAccount, setGoCreateAccount] = React.useState(false);
+    const [goHomePage, setGoHomePage] = React.useState(false);
 
     if (goCreateAccount) {
         return <Navigate to = "/create" />; 
+    }
+
+    if (goHomePage) {
+        return <Navigate to = "/home" />;
     }
 
     return (
