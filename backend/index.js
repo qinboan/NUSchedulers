@@ -31,7 +31,7 @@ app.get("/getUsers", (req, res) => {
     // })
 })
 
-app.post("/login", async (req, res) => {
+app.post("/", async (req, res) => {
     const {username, password} = req.body;
 
     try {
@@ -47,7 +47,7 @@ app.post("/login", async (req, res) => {
     }
 })
 
-app.post("/signUp", async (req, res) => {
+app.post("/create", async (req, res) => {
     const {username, password} = req.body;
     const data = {
         username:username,

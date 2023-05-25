@@ -1,16 +1,37 @@
 import React from "react";
+import axios from "axios";
 import { Navigate } from "react-router-dom";
 
 function Login() {
     const [goCreateAccount, setGoCreateAccount] = React.useState(false);
-    const [goHomePage, setGoHomePage] = React.useState(false);
+    //const [goHomePage, setGoHomePage] = React.useState(false);
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
 
     if (goCreateAccount) {
         return <Navigate to = "/create" />; 
     }
 
-    if (goHomePage) {
+    /*if (goHomePage) {
         return <Navigate to = "/home" />;
+    }*/
+
+    async function login(e) {
+        try {
+            await axios.post("http://localhost:3000/", {
+                username, password
+            })
+            .then(res => {
+                if (res.data = "exists") {
+                    return <Navigate to = "/home" />;
+                } else if (res.data = "doesNotExist") {
+                    alert("User does not exists")
+                }
+            })
+            
+        } catch(e) {
+            console.log(e);
+        }
     }
 
     return (

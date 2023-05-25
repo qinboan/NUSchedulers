@@ -1,6 +1,19 @@
 import React from "react";
 
 function Create() {
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
+
+    async function login(e) {
+        try {
+            await axios.post("http://localhost:3000/create", {
+                username, password
+            })
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
     return (
         <div>
             <div class="NUSchedulers">
