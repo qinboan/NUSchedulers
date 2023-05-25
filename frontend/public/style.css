@@ -13,6 +13,15 @@ body, html {
     font-family: 'Chewy'; font-size: 22px;
 }
 
+.Schedule {
+    position: absolute;
+    top: 8%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant'; font-size: 22px;
+    color: #4F24C9;
+}
+
 .login{
     font-family: 'Commissioner'; font-size: 22px;;
     position: absolute;
