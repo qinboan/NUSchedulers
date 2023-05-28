@@ -26,9 +26,9 @@ function Login() {
             })
             .then(res => {
                 if (res.data === "exists") {
-                    //alert("User exists")
-                    //return <Navigate to = "/home" />;
                     history("/home", {state:{id:username}})
+                } else if (res.data === "userExists") {
+                    alert("Wrong password!")
                 } else if (res.data === "doesNotExist") {
                     alert("User does not exists")
                 }
