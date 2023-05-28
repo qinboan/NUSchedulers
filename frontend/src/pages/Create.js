@@ -1,13 +1,30 @@
 import React from "react";
+import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function Create() {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
+    const history = useNavigate();
+
     async function login(e) {
+        e.preventDefault();
         try {
-            await axios.post("http://localhost:3000/create", {
+            await axios.post("http://localhost:3001/create", {
                 username, password
+            })
+            .then(res=>{
+                if(res.data=="exist"){
+                    alert("User already exists")
+                }
+                else if(res.data=="notexist"){
+                    history("/home",{state:{id:username}})
+                }
+            })
+            .catch(e=>{
+                alert("wrong details")
+                console.log(e);
             })
         } catch(e) {
             console.log(e);
@@ -38,6 +55,8 @@ function Create() {
                 <form action="">
                     <input type="submit" value="Create account"/><br/><br/>
                 </form>
+
+                {/* <button onClick={<Navigate to = "/home" />}>Create Account</button> */}
         
             </div>
         </div>

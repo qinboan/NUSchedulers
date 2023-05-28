@@ -1,12 +1,14 @@
 import React from "react";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function Login() {
     const [goCreateAccount, setGoCreateAccount] = React.useState(false);
     //const [goHomePage, setGoHomePage] = React.useState(false);
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
+
+    const history = useNavigate();
 
     if (goCreateAccount) {
         return <Navigate to = "/create" />; 
@@ -17,14 +19,17 @@ function Login() {
     }*/
 
     async function login(e) {
+        e.preventDefault();
         try {
-            await axios.post("http://localhost:3000/", {
+            await axios.post("http://localhost:3001/", {
                 username, password
             })
             .then(res => {
-                if (res.data = "exists") {
-                    return <Navigate to = "/home" />;
-                } else if (res.data = "doesNotExist") {
+                if (res.data === "exists") {
+                    //alert("User exists")
+                    //return <Navigate to = "/home" />;
+                    history("/home", {state:{id:username}})
+                } else if (res.data === "doesNotExist") {
                     alert("User does not exists")
                 }
             })
@@ -45,15 +50,15 @@ function Login() {
             <form>
         
                 <i className="fa-solid fa-user"></i>
-                <input type="username" name="" placeholder="Username"/>
+                <input type="username" onChange={(e) => { setUsername(e.target.value) }} placeholder="Username"/>
                 <br/><br/>
         
                 <i className="fa-solid fa-key"></i>
-                 <input type="password" name="" placeholder="Password"/>
+                 <input type="password" onChange={(e) => { setPassword(e.target.value) }} placeholder="Password"/>
         
                 <br/><br/><br/>
         
-                <input type="submit" value="Login"/>
+                <input type="submit" value="Login" onClick={login}/>
                 <br/><br/>
   
           
