@@ -35,7 +35,7 @@ app.post("/", async (req, res) => {
     const {username, password} = req.body;
 
     try {
-        const check = await UserModel.findOne({username:username})
+        const check = await UserModel.findOne({username:username, password:password})
 
         if (check) {
             res.json("exists")

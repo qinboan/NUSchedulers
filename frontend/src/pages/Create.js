@@ -8,18 +8,18 @@ function Create() {
 
     const history = useNavigate();
 
-    async function login(e) {
+    async function create(e) {
         e.preventDefault();
         try {
             await axios.post("http://localhost:3001/create", {
                 username, password
             })
             .then(res=>{
-                if(res.data=="exist"){
+                if(res.data==="exists"){
                     alert("User already exists")
                 }
-                else if(res.data=="notexist"){
-                    history("/home",{state:{id:username}})
+                else if(res.data==="doesNotExist"){
+                    history("/",{state:{id:username}})
                 }
             })
             .catch(e=>{
@@ -41,19 +41,16 @@ function Create() {
                 <form>
           
                     <i class="fa-solid fa-user"></i>
-                    <input type="username" name="" placeholder="Username"/><br/><br/>
+                    <input type="username" onChange={(e) => { setUsername(e.target.value) }} placeholder="Username"/><br/><br/>
           
                     <i class="fa-solid fa-key"></i>
-                    <input type="password" name="" placeholder="Password"/><br/><br/>
-
-                    <i class="fa-solid fa-key"></i>
-                    <input type="password" name="" placeholder="Confirm Password"/><br/><br/><br/>
+                    <input type="password" onChange={(e) => { setPassword(e.target.value) }} placeholder="Password"/><br/><br/>
           
             
                 </form>
 
                 <form action="">
-                    <input type="submit" value="Create account"/><br/><br/>
+                    <input type="submit" value="Create account" onClick={create}/><br/><br/>
                 </form>
 
                 {/* <button onClick={<Navigate to = "/home" />}>Create Account</button> */}
