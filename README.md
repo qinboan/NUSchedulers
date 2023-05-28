@@ -2,15 +2,15 @@
 
 **Milestone 1**
 
-**Team: **NUSchedulers
+Team: NUSchedulers
 
-**Proposed Level of Achievement: **Apollo 11 
+Proposed Level of Achievement: Apollo 11 
 
-**Motivation **
+**Motivation**
 
 Planning a timetable for the semester can be a tedious and time-consuming task for NUS students. Although NusMods provides a list of lectures and tutorial timings, it does not automatically generate a timetable for users. Students have to spend time coordinating with their friends and ensuring they choose the best classes. Our motivation is to develop a web application that simplifies the process of generating an ideal timetable based on the user’s inputted modules and specifications.
 
-**Aim **
+**Aim**
 
 We aim to provide NUS students with a user-friendly timetable web app that can automatically generate an ideal timetable based on inputted modules and user specifications. The app will allow users to personalize their timetable by adding custom events, provide reminders for upcoming classes and events, and allow users to set their own reminders for specific deadlines.
 
@@ -209,8 +209,5 @@ Features to be completed by the mid of July:
 
 
 
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image1.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
-
-![alt_text](images/image1.png "image_tooltip")
 
