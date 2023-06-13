@@ -13,14 +13,81 @@ body, html {
     font-family: 'Chewy'; font-size: 22px;
 }
 
+.Home {
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(
+        to right,
+        #fef5ff 0%,
+        #fef5ff 70%, 
+        #F7E9FF 70%,
+        #F7E9FF 100%
+    );    
+}
 .Schedule {
     position: absolute;
     top: 8%;
-    left: 40%;
+    left: 35%;
     transform: translate(-50%, -50%);
     font-family: 'Cormorant'; font-size: 22px;
     color: #4F24C9;
 }
+
+.Deadlines {
+    position: absolute;
+    top: 15%;
+    left: 86%;
+    transform: translate(-50%, -50%);
+    font-family: 'Courgette'; font-size: 22px;
+    color: #BC53FC;
+}
+
+.today {
+    position: absolute;
+    top: 26%;
+    left: 77%;
+    transform: translate(-50%, -50%);
+    font-family: 'Courgette'; font-size: 14px;
+    color: black;
+}
+
+.tomorrow {
+    position: absolute;
+    top: 40%;
+    left: 78%;
+    transform: translate(-50%, -50%);
+    font-family: 'Courgette'; font-size: 14px;
+    color: black;
+}
+
+.editTimetable {
+    position: absolute;
+    top: 87%;
+    left: 14%;
+    transform: translate(-50%, -50%);
+    color: black;
+}
+.editTimetable button {
+    background: #06ffd2;
+    height: 50px;
+    width: 200px;
+    border-radius: 25px;
+}
+
+.generateTimetable {
+    position: absolute;
+    top: 87%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    color: black;
+}
+.generateTimetable button {
+    background: #06f0ff;
+    height: 50px;
+    width: 200px;
+    border-radius: 25px;
+}
+
 
 .login{
     font-family: 'Commissioner'; font-size: 22px;;
@@ -60,3 +127,210 @@ body, html {
     border-radius: 25px;
 }
 
+.Generate {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Comissioner'; font-size: 22px;
+    color: black;
+}
+
+.Modules {
+    position: absolute;
+    top: 25%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    font-family: 'Comissioner'; font-size: 22px;
+    color: black;
+}
+
+.select {
+    position: absolute;
+    z-index: 10;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Comissioner'; font-size: 22px;
+    color: black;
+}
+
+.first {
+    position: absolute;
+    top: 38%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    font-family: 'Courgette'; font-size: 22px;
+    color: black;
+}
+
+.second {
+    position: absolute;
+    top: 45%;
+    left: 54%;
+    transform: translate(-50%, -50%);
+    font-family: 'Courgette'; font-size: 22px;
+    color: black;
+}
+
+.advanced {
+    position: absolute;
+    top: 65%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    color: black;
+}
+.advanced button {
+    background: #06f0ff;
+    height: 50px;
+    width: 200px;
+    border-radius: 25px;
+}
+
+.generate {
+    position: absolute;
+    top: 75%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    color: black;
+}
+.generate button {
+    background: #06ffd2;
+    height: 60px;
+    width: 250px;
+    border-radius: 25px;
+    font-size: 23px;
+}
+
+.Filter {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant'; font-size: 22px;
+    color: black;
+}
+
+.Days {
+    position: absolute;
+    top: 25%;
+    left: 33%;
+    transform: translate(-50%, -50%);
+    font-family: 'Comissioner'; font-size: 22px;
+    color: black;
+}
+.selectDays {
+    position: absolute;
+    z-index: 10;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Comissioner'; font-size: 22px;
+    color: black;
+}
+
+.Lessons {
+    position: absolute;
+    top: 40%;
+    left: 33%;
+    transform: translate(-50%, -50%);
+    font-family: 'Comissioner'; font-size: 22px;
+    color: black;
+}
+.selectLessons {
+    position: absolute;
+    z-index: 8;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Comissioner'; font-size: 22px;
+    color: black;
+}
+
+.Start {
+    position: absolute;
+    top: 55%;
+    left: 32%;
+    transform: translate(-50%, -50%);
+    font-family: 'Comissioner'; font-size: 22px;
+    color: black;
+}
+.selectStart {
+    position: absolute;
+    z-index: 6;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Comissioner'; font-size: 22px;
+    color: black;
+}
+
+.End {
+    position: absolute;
+    top: 70%;
+    left: 33%;
+    transform: translate(-50%, -50%);
+    font-family: 'Comissioner'; font-size: 22px;
+    color: black;
+}
+.selectEnd {
+    position: absolute;
+    z-index: 4;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Comissioner'; font-size: 22px;
+    color: black;
+}
+
+.save {
+    position: absolute;
+    top: 85%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    color: black;
+}
+.save button {
+    background: #06ffd2;
+    height: 50px;
+    width: 200px;
+    border-radius: 25px;
+    font-size: 22px;
+}
+
+.Edit {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant'; font-size: 22px;
+    color: black;
+}
+
+.cancel {
+    position: absolute;
+    top: 87%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    color: black;
+}
+.cancel button {
+    background: rgb(243, 35, 35);
+    height: 50px;
+    width: 150px;
+    border-radius: 25px;
+}
+
+.saveTimetable {
+    position: absolute;
+    top: 87%;
+    left: 85%;
+    transform: translate(-50%, -50%);
+    color: black;
+}
+.saveTimetable button {
+    background: #06ffd2;
+    height: 50px;
+    width: 150px;
+    border-radius: 25px;
+}
