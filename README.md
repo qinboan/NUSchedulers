@@ -209,7 +209,8 @@ Features to be completed by the mid of July:
 
 <img width="792" alt="Screenshot 2023-05-25 at 11 20 47 PM" src="https://github.com/qinboan/NUSchedulers/assets/122253420/e31427de-9f9d-4793-99fd-b08db6318c7b">
 
+**Technical Proof of Concept**
 
-
+https://github.com/qinboan/NUSchedulers/issues/2#issue-1729575804
 
 
