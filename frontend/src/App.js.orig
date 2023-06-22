@@ -1,0 +1,43 @@
+//import logo from './logo.svg';
+import './App.css';
+import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Create from './pages/Create';
+import Home from './pages/Home';
+<<<<<<< HEAD
+import Modules from './pages/Modules';
+=======
+import Generate from './pages/Generate';
+import Filter from './pages/Filter';
+import Edit from './pages/Edit';
+import Authentication from './pages/Authentication';
+>>>>>>> acf003a79014f231c4eb86debc217eb0d8d20b27
+
+function App() {
+  const [loggedIn, setLoggedIn] = useState(false)
+  return (
+    //<AuthProvider>
+    <Router>
+      <Routes>
+        <Route path = "/" element = { <Login setLoggedIn={setLoggedIn}/> } />
+        <Route path = "/create" element = { <Create /> } />
+<<<<<<< HEAD
+        <Route path = "/home" element = { <Home /> } />
+        <Route path = "/modules" element = { <Modules /> } />
+=======
+        <Route element = { <Authentication loggedIn={loggedIn}/> }>
+          <Route path = "/home" element = { <Home /> } />
+          <Route path = "/generate" element = { <Generate /> } />
+          <Route path = "/filter" element = { <Filter /> } />
+          <Route path = "/edit" element = { <Edit /> } />
+        </Route>
+>>>>>>> acf003a79014f231c4eb86debc217eb0d8d20b27
+      </Routes>
+    </Router>
+    //</AuthProvider>
+    
+  );
+}
+
+export default App;

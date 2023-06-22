@@ -155,9 +155,23 @@ body, html {
     color: black;
 }
 
+.search-bar {
+    width: 300px; /* Adjust the width as needed */
+    font-size: 16px; /* Adjust the font size as needed */
+    margin-bottom: 10px; /* Adjust the margin bottom as needed */
+}
+  
+.search-bar__control {
+    height: 40px !important; /* Adjust the height as needed */
+}
+  
+.search-bar__single-value {
+    font-size: 16px !important; /* Adjust the font size as needed */
+}
+
 .first {
     position: absolute;
-    top: 38%;
+    top: 50%;
     left: 45%;
     transform: translate(-50%, -50%);
     font-family: 'Courgette'; font-size: 22px;
@@ -166,8 +180,8 @@ body, html {
 
 .second {
     position: absolute;
-    top: 45%;
-    left: 54%;
+    top: 57%;
+    left: 45%;
     transform: translate(-50%, -50%);
     font-family: 'Courgette'; font-size: 22px;
     color: black;

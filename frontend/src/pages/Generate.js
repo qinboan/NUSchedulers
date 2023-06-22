@@ -1,25 +1,63 @@
-import React from "react";
-import { useState } from "react";
-// import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
-import MultiSelect from  'react-multiple-select-dropdown-lite'
-import  'react-multiple-select-dropdown-lite/dist/index.css'
+import Select from 'react-select'; 
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 
 function Generate() {
 
-    const [value, setvalue] = useState('')
+    const [data, setData] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [addedModules, setAddedModules] = useState([]);
 
-    const  handleOnchange  =  val  => {
-        setvalue(val)
-    }
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const response = await axios.get('https://api.nusmods.com/v2/2022-2023/moduleList.json');
+            setData(response.data); // Store the fetched data in the state
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
-    const  options  = [
-        { label:  'Option 1', value:  'option_1'  },
-        { label:  'Option 2', value:  'option_2'  },
-        { label:  'Option 3', value:  'option_3'  },
-        { label:  'Option 4', value:  'option_4'  },
-    ]
+    fetchData();
+    }, []);
+
+    useEffect(() => {
+        const results = data.filter((item) =>
+          item.moduleCode.toLowerCase().startsWith(searchTerm.toLowerCase())
+        );
+        setSearchResults(results);
+    }, [data, searchTerm]);
+    
+    const handleSearch = (inputValue) => {
+        setSearchTerm(inputValue);
+    };
+
+    const handleSelect = (selectedOption) => {
+        const selectedModuleCode = selectedOption.value;
+        const moduleExists = addedModules.some(
+            (module) => module.moduleCode === selectedModuleCode
+        );
+        if (!moduleExists) {
+            const selectedModule = searchResults.find(
+                (module) => module.moduleCode === selectedModuleCode
+            );
+            setAddedModules([...addedModules, selectedModule]);
+        }
+    };
+
+    const handleRemove = (moduleCode) => {
+        const updatedModules = addedModules.filter(
+            (module) => module.moduleCode !== moduleCode
+        );
+        setAddedModules(updatedModules);
+    };
+    const dropdownOptions = searchResults.map((item) => ({
+        value: item.moduleCode,
+        label: item.moduleCode,
+    }));
 
     const [first, setFirst] = useState(false);
     const changeFirst = !first;
@@ -50,15 +88,32 @@ function Generate() {
                 {/* {value} */}
             </div>
 
-
-            <div className="select"> 
-                <MultiSelect
-                    onChange={handleOnchange}
-                    options={options}
+            <div className="select">
+                <Select
+                    options={dropdownOptions}
+                    isSearchable
+                    placeholder="Search by module code"
+                    onChange={handleSelect}
+                    onInputChange={handleSearch}
+                    className="search-bar"
+                    classNamePrefix="search-bar"
                 />
-
             </div>
 
+            <div classname="selected-modules">
+                <h4>Selected Modules:</h4>
+                <ul>
+                    {addedModules.map((module) => (
+                        <li key={module.moduleCode}>
+                            {module.moduleCode}
+                            <button onClick={() => handleRemove(module.moduleCode)}>
+                                Remove
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            
             <div className="first">
                 <input type = "checkbox" checked = {first} onClick={() => setFirst(changeFirst)}/>
                 <label>Spread my classes in the available dates</label>
@@ -88,10 +143,7 @@ function Generate() {
                     Generate!
                 </button>
             </div>
-
-        
         </div>
-            
     )
 }
 
