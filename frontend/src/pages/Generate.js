@@ -100,7 +100,7 @@ function Generate() {
                 />
             </div>
 
-            <div classname="selected-modules">
+            <div className="selected-modules">
                 <h4>Selected Modules:</h4>
                 <ul>
                     {addedModules.map((module) => (
