@@ -10,6 +10,7 @@ function Generate() {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [addedModules, setAddedModules] = useState([]);
+    const [fetchedData, setFetchedData] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -58,6 +59,24 @@ function Generate() {
         value: item.moduleCode,
         label: item.moduleCode,
     }));
+    
+    const handleGenerate = async () => {
+        // Extract the module codes from the addedModules array
+        const moduleCodes = addedModules.map((module) => module.moduleCode);
+    
+        try {
+          // Make an API request with the selected module codes
+          const response = await axios.get('https://api.nusmods.com/v2/2022-2023/modules/CS1010S.json', {
+            params: {
+              modules: moduleCodes.join(','), // Convert module codes to a comma-separated string
+            },
+          });
+    
+          setFetchedData(response.data);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+    };
 
     const [first, setFirst] = useState(false);
     const changeFirst = !first;
@@ -135,14 +154,16 @@ function Generate() {
             </div>
 
             <div className="generate">
-                <button onClick={() => {
-                    setGenerate(true);
-                }}
-                >
-                    {" "}
+                <button onClick={handleGenerate}>
                     Generate!
                 </button>
             </div>
+            {fetchedData && (
+                <div className="fetched-data">
+                    <h4>Fetched Data:</h4>
+                    <pre>{JSON.stringify(fetchedData, null, 2)}</pre>
+                </div>
+            )}
         </div>
     )
 }
