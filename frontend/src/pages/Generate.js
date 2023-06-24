@@ -2,6 +2,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 import Select from 'react-select'; 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { generateTimetableData } from './TimetableUtils';
+import Timetable from './Timetable';
 
 
 function Generate() {
@@ -10,7 +12,7 @@ function Generate() {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [addedModules, setAddedModules] = useState([]);
-    const [fetchedData, setFetchedData] = useState(null);
+    const [timetableData, setTimetableData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -72,7 +74,8 @@ function Generate() {
             },
           });
     
-          setFetchedData(response.data);
+          const generatedTimetableData = generateTimetableData(response.data);
+          setTimetableData(generatedTimetableData);
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -158,12 +161,9 @@ function Generate() {
                     Generate!
                 </button>
             </div>
-            {fetchedData && (
-                <div className="fetched-data">
-                    <h4>Fetched Data:</h4>
-                    <pre>{JSON.stringify(fetchedData, null, 2)}</pre>
-                </div>
-            )}
+
+            {/* Render the timetable component if there is timetableData */}
+            {timetableData.length > 0 && <Timetable timetableData={timetableData} />}
         </div>
     )
 }
