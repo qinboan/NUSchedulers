@@ -66,18 +66,33 @@ function Generate() {
     const handleGenerate = async () => {
         // Extract the module codes from the addedModules array
         const moduleCodes = addedModules.map((module) => module.moduleCode);
+
+        const apiRequests = [];
+        //alert(moduleCodes);
     
         try {
-          // Make an API request with the selected module codes
-          const response = await axios.get('https://api.nusmods.com/v2/2022-2023/modules/CS1010S.json', {
-            params: {
-              modules: moduleCodes.join(','), // Convert module codes to a comma-separated string
-            },
-          });
-    
-          const generatedTimetableData = generateTimetableData(response.data);
-          setTimetableData(generatedTimetableData);
-          setShowTimetable(true);
+            moduleCodes.forEach((moduleCode) => {
+                const apiUrl = `https://api.nusmods.com/v2/2022-2023/modules/${moduleCode}.json`;
+                const apiRequest = axios.get(apiUrl);
+                apiRequests.push(apiRequest);
+            });
+
+            const responses = await Promise.all(apiRequests);
+
+            const timeTableDataArray = responses.map((response) => response.data);
+            
+
+        //   const response = await axios.get('https://api.nusmods.com/v2/2022-2023/modules/CS1010S.json', {
+        //     params: {
+        //       modules: moduleCodes.join(','), // Convert module codes to a comma-separated string
+        //     },
+        //   });
+          //setGenerate(true);
+            const generatedTimetableData = generateTimetableData(timeTableDataArray);
+            setTimetableData(generatedTimetableData);
+            //setTimetableData(timeTableDataArray);
+            setShowTimetable(true);
+          
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -164,6 +179,12 @@ function Generate() {
                 </button>
             </div>
 
+            {/* {showTimetable && (
+                <div className="timetabledata">
+                    <h4>TimeTable Data: </h4>
+                    <pre>{JSON.stringify(timetableData, null, 2)}</pre>
+                </div>
+            )} */}
             {/* Render the timetable component if there is timetableData */}
             {showTimetable ? <Timetable timetableData={timetableData} /> : null}
         </div>

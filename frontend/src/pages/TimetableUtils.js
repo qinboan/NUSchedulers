@@ -1,11 +1,14 @@
 export function generateTimetableData(modules) {
+
+    //alert("found");
     const timetable = {};
-  
     modules.forEach((module) => {
+        //alert("found modules");
         module.semesterData.forEach((semester) => {
+            //alert("found semester");
             semester.timetable.forEach((classItem) => {
                 if (
-                    classItem.moduleCode &&
+                    //classItem.moduleCode &&
                     classItem.lessonType &&
                     classItem.classNo &&
                     classItem.day &&
@@ -13,27 +16,31 @@ export function generateTimetableData(modules) {
                     classItem.endTime &&
                     classItem.venue
                 ) {
-                    const classKey = `${classItem.lessonType}-${classItem.classNo}`;
+                    //alert("found");
+                    const classKey = `${module.moduleCode} - ${classItem.lessonType}`;
   
                     if (!timetable[classKey]) {
                         timetable[classKey] = {
                             lessonType: classItem.lessonType,
                             classNo: classItem.classNo,
-                            moduleCode: classItem.moduleCode,
+                            moduleCode: module.moduleCode,
                             schedule: [],
                         };
+
+                        timetable[classKey].schedule.push({
+                            day: classItem.day,
+                            startTime: classItem.startTime,
+                            endTime: classItem.endTime,
+                            venue: classItem.venue,
+                        });
                     }
   
-                    timetable[classKey].schedule.push({
-                        day: classItem.day,
-                        startTime: classItem.startTime,
-                        endTime: classItem.endTime,
-                        venue: classItem.venue,
-                    });
+                    
                 } else {
                     console.error('Missing or invalid data for generating timetable:', classItem);
                     // Handle the missing or invalid data as needed
-                }
+                    //alert(toString(classItem));
+                }   
             });
         });
     });

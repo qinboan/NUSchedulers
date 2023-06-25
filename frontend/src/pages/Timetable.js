@@ -2,7 +2,7 @@ import React from 'react';
 
 function Timetable({ timetableData }) {
     if (timetableData.length === 0) {
-        alert("No timetable data available.")
+        console.log("No timetable data available.");
     }
 
     return (
