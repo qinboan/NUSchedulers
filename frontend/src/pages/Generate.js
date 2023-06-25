@@ -19,7 +19,7 @@ function Generate() {
     useEffect(() => {
         const fetchData = async () => {
         try {
-            const response = await axios.get('https://api.nusmods.com/v2/2022-2023/moduleList.json');
+            const response = await axios.get('https://api.nusmods.com/v2/2023-2024/moduleList.json');
             setData(response.data); // Store the fetched data in the state
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -73,7 +73,7 @@ function Generate() {
     
         try {
             moduleCodes.forEach((moduleCode) => {
-                const apiUrl = `https://api.nusmods.com/v2/2022-2023/modules/${moduleCode}.json`;
+                const apiUrl = `https://api.nusmods.com/v2/2023-2024/modules/${moduleCode}.json`;
                 const apiRequest = axios.get(apiUrl);
                 apiRequests.push(apiRequest);
             });
