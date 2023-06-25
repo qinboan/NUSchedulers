@@ -14,9 +14,7 @@ import Timetable from './pages/Timetable';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
-  const [timetableData, setTimetableData] = useState([]);
   return (
-    //<AuthProvider>
     <Router>
       <Routes>
         <Route path = "/" element = { <Login setLoggedIn={setLoggedIn}/> } />
@@ -31,7 +29,6 @@ function App() {
         <Route path = "/modules" element = { <Modules /> } />
       </Routes>
     </Router>
-    //</AuthProvider>
     
   );
 }

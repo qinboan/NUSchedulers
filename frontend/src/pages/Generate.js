@@ -1,9 +1,8 @@
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Select from 'react-select'; 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { generateTimetableData } from './TimetableUtils';
-import Timetable from './Timetable';
 import Home from "./Home";
 
 
@@ -108,15 +107,10 @@ function Generate() {
     const changeSecond = !second;
 
     const [advanced, setAdvanced] = useState(false);
-    const [generate, setGenerate] = useState(false);
 
    
     if (advanced) {
         return <Navigate to = "/filter" />; 
-    }
-
-    if (generate) {
-        return <Navigate to = "/home" />; 
     }
 
     if (showTimetable) {
