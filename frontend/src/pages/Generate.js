@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { generateTimetableData } from './TimetableUtils';
 import Timetable from './Timetable';
+import Home from "./Home";
 
 
 function Generate() {
@@ -14,6 +15,7 @@ function Generate() {
     const [addedModules, setAddedModules] = useState([]);
     const [timetableData, setTimetableData] = useState([]);
     const [showTimetable, setShowTimetable] = useState(false);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -92,6 +94,7 @@ function Generate() {
             setTimetableData(generatedTimetableData);
             //setTimetableData(timeTableDataArray);
             setShowTimetable(true);
+
           
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -114,6 +117,10 @@ function Generate() {
 
     if (generate) {
         return <Navigate to = "/home" />; 
+    }
+
+    if (showTimetable) {
+        return <Home timetableData = {timetableData} showTimetable={showTimetable}/>
     }
 
     return (
@@ -186,7 +193,8 @@ function Generate() {
                 </div>
             )} */}
             {/* Render the timetable component if there is timetableData */}
-            {showTimetable ? <Timetable timetableData={timetableData} /> : null}
+            {/* {showTimetable ? <Timetable timetableData={timetableData} /> : null} */}
+            
         </div>
     )
 }

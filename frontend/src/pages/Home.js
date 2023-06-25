@@ -1,9 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import Timetable from "./Timetable";
 
 
-function Home() {
+function Home({timetableData, showTimetable}) {
 
     const [check, setCheck] = useState(false);
     const [edit, setEdit] = useState(false);
@@ -60,6 +61,8 @@ function Home() {
                     Generate Timetable
                 </button>
             </div>
+
+            {showTimetable ? <Timetable timetableData={timetableData} /> : null}
 
         </div>
     )

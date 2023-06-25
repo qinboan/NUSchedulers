@@ -10,9 +10,11 @@ import Filter from './pages/Filter';
 import Edit from './pages/Edit';
 import Authentication from './pages/Authentication';
 import Modules from './pages/Modules';
+import Timetable from './pages/Timetable';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
+  const [timetableData, setTimetableData] = useState([]);
   return (
     //<AuthProvider>
     <Router>
@@ -24,6 +26,7 @@ function App() {
           <Route path = "/generate" element = { <Generate /> } />
           <Route path = "/filter" element = { <Filter /> } />
           <Route path = "/edit" element = { <Edit /> } />
+          <Route path = "/timetable" element = { <Timetable /> } />
         </Route>
         <Route path = "/modules" element = { <Modules /> } />
       </Routes>

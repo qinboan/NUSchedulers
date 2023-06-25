@@ -1,6 +1,10 @@
 import React from 'react';
+import Generate from './Generate';
 
 function Timetable({ timetableData }) {
+
+    //const timetableData = location.state ? location.state.timetableData : [];
+
     if (timetableData.length === 0) {
         console.log("No timetable data available.");
     }
