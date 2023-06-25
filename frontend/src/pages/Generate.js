@@ -13,6 +13,7 @@ function Generate() {
     const [searchResults, setSearchResults] = useState([]);
     const [addedModules, setAddedModules] = useState([]);
     const [timetableData, setTimetableData] = useState([]);
+    const [showTimetable, setShowTimetable] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -76,6 +77,7 @@ function Generate() {
     
           const generatedTimetableData = generateTimetableData(response.data);
           setTimetableData(generatedTimetableData);
+          setShowTimetable(true);
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -163,7 +165,7 @@ function Generate() {
             </div>
 
             {/* Render the timetable component if there is timetableData */}
-            {timetableData.length > 0 && <Timetable timetableData={timetableData} />}
+            {showTimetable ? <Timetable timetableData={timetableData} /> : null}
         </div>
     )
 }
