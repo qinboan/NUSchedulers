@@ -64,6 +64,13 @@ function Home({timetableData, showTimetable}) {
 
             {showTimetable ? <Timetable timetableData={timetableData} /> : null}
 
+            {/* {showTimetable && (
+                <div className="timetabledata">
+                    <h4>TimeTable Data: </h4>
+                    <pre>{JSON.stringify(timetableData, null, 2)}</pre>
+                </div>
+            )} */}
+
         </div>
     )
 }
