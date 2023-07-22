@@ -1,6 +1,10 @@
 import React from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import { SlCalender } from 'react-icons/sl';
+import { FcTodoList } from "react-icons/fc";
 
 function Login({ setLoggedIn }) {
     const [goCreateAccount, setGoCreateAccount] = React.useState(false);
@@ -36,10 +40,24 @@ function Login({ setLoggedIn }) {
     }
 
     return (
-    <div>
+    <div className="Login">
 
         <div className="NUSchedulers">
-            <h1>NUSchedulers</h1>
+            <h1><SlCalender/> NUSchedulers <SlCalender/></h1>
+            
+        </div>
+
+        <div className="about">
+            
+            <h1>Our Features</h1>
+            <FcTodoList />
+            <p></p>
+            
+        </div>
+
+
+        <div className="loginPage">
+            <h1>Login</h1>
         </div>
   
         <div className="login">

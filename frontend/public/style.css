@@ -5,10 +5,21 @@ body, html {
     background: #fef5ff;
 }
 
+.Login {
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(
+        to right,
+        #F7E9FF 0%,
+        #F7E9FF 60%, 
+        #fef5ff 60%,
+        #fef5ff 100%
+    );    
+}
 .NUSchedulers {
     position: absolute;
-    top: 15%;
-    left: 50%;
+    top: 8%;
+    left: 15%;
     transform: translate(-50%, -50%);
     font-family: 'Chewy'; font-size: 22px;
 }
@@ -33,10 +44,10 @@ body, html {
     color: #4F24C9;
 }
 
-.Deadlines {
+.Tasks {
     position: absolute;
     top: 15%;
-    left: 86%;
+    left: 84%;
     transform: translate(-50%, -50%);
     font-family: 'Courgette'; font-size: 22px;
     color: #BC53FC;
@@ -88,12 +99,26 @@ body, html {
     border-radius: 25px;
 }
 
+.about {
+    position: absolute;
+    top: 18%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    font-family: 'Comissioner'; font-size: 18px;
+}
 
+.loginPage {
+    position: absolute;
+    top: 20%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    font-family: 'Chewy'; font-size: 22px;
+}
 .login{
     font-family: 'Commissioner'; font-size: 22px;;
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 80%;
     transform: translate(-50%, -50%);
 }
 
@@ -122,6 +147,67 @@ body, html {
 
 .login button {
     background: #06f0ff;
+    height: 60px;
+    width: 240px;
+    border-radius: 25px;
+}
+
+.notNew {
+    position: absolute;
+    top: 40%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    font-family: 'Courgette' ; font-size: 30px;
+    color:black
+}
+
+.member {
+    position: absolute;
+    top: 55%;
+    left: 23%;
+}
+
+.createAccount {
+    position: absolute;
+    top: 20%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    font-family: 'Chewy'; font-size: 22px;
+}
+
+.create{
+    font-family: 'Commissioner'; font-size: 22px;;
+    position: absolute;
+    top: 50%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+}
+
+.create input[type="username"], input[type="password"] {
+    border: none;
+    border-bottom: 1px solid black;
+    background: #f6f6f6;
+    outline: black;
+    height: 50px;
+    width: 200px;
+}
+
+.create input[type="submit"] {
+    background: #06f0ff;
+    height: 60px;
+    width: 240px;
+    border-radius: 25px;
+}
+
+.create a {
+    color: #9DA3A2;
+    border-bottom: transparent;
+    outline: transparent;
+    font-size: 15px;
+}
+
+.create button {
+    background: #06ffd2;
     height: 60px;
     width: 240px;
     border-radius: 25px;
@@ -196,6 +282,47 @@ body, html {
     font-family: 'Courgette'; font-size: 22px;
     color: black;
 }
+
+.tasks {
+    position: absolute;
+    top: 23%;
+    left: 76%;
+}
+
+.addTasks {
+    border: 1px solid black;
+    background: #f6f6f6;
+    outline: black;
+    height: 30px;
+    width: 150px;
+}
+
+.addTask {
+    border: none;
+    background:paleturquoise;
+    height: 33px;
+    width: 100px;
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 4px auto;
+    color: black;
+    padding: 16px;
+    border-radius: 5px;
+    width: 90%;
+    background: paleturquoise;
+  }
+
+  .icons {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+  }
+  
+  
 
 .advanced {
     position: absolute;
