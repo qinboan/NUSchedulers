@@ -62,6 +62,7 @@ function Filter({ setFilterOptions, account }) {
 
         setFilterOptions(options);
         setSave(true);
+        //alert(JSON.stringify(options))
     };
 
 

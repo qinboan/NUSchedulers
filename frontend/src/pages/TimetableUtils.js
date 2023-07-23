@@ -3,6 +3,15 @@ export function generateTimetableData(timetableDataArray, filterOptions, second)
     const timetable = {};
     const days = {};
     let conflict = false;
+    let unablePref = false;
+    const avoid = filterOptions.day;
+    const start = filterOptions.start === '' ? '0000' : filterOptions.start;
+    const end = filterOptions.end === '' ? '2359' : filterOptions.end;
+
+
+    // alert(JSON.stringify(avoid));
+    // alert(start);
+    // alert(end);
 
   
     timetableDataArray.forEach((module) => {
@@ -63,12 +72,25 @@ export function generateTimetableData(timetableDataArray, filterOptions, second)
                     return overlap;
                 });
             });
+
+            const checkPref = Object.values(avoid).every((avoidDay) => {
+                return (
+                    classInformation.day !== avoidDay &&
+                    classInformation.startTime >= start &&
+                    classInformation.endTime <= end
+                );
+            });
+
     
             if (timetable[classKey].schedule.length === 0) {
-                if (!hasOverlap || index + 1 === arr.length) {
+                if ((!hasOverlap && checkPref )|| index + 1 === arr.length) {
 
                     if (index + 1 === arr.length && hasOverlap) {
                         conflict = true
+                    }
+                    
+                    if (index + 1 === arr.length && !checkPref) {
+                        unablePref = true;
                     }
 
                     timetable[classKey].schedule.push({
@@ -118,19 +140,12 @@ export function generateTimetableData(timetableDataArray, filterOptions, second)
         });
     });
 
-    // Object.values(timetable).forEach((classItem) => {
-    //     const classKey = `${classItem.moduleCode} + ${classItem.lessonType}`;
-    
-    //     if (timetable[classKey].schedule.length === 0) {
-
-    //         console.log(`No suitable class found for ${classItem.lessonType}`);
-    //         alert("Conflicting classes");
-
-    //     }
-    // });
-
     if (conflict) {
         alert("Conflicting classes");
+    }
+
+    if (unablePref) {
+        alert("Unable to fulfil all advanced filter preferences")
     }
 
 
