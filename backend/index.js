@@ -9,7 +9,13 @@ const port = 3001
 
 const app = express()
 app.use(express.urlencoded({ extended: true }))
-app.use(cors())
+app.use(cors(
+    {
+        origin: ["https://nuschedulers.vercel.app/"],
+        methods: ["POST", "GET"],
+        credentials: true
+    }
+))
 
 app.use(express.json())
 
@@ -21,6 +27,15 @@ mongoose.connect(mongooseUrl, {
     console.log("Connected to database");
   })
   .catch((e) => console.log(e));
+
+
+  
+app.get("/", async (req, res) => {
+    return res.json({
+      message: "Server is up",
+    });
+});
+
 
 app.post("/", async (req, res) => {
     const {username, password} = req.body;
