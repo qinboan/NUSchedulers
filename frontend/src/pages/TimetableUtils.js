@@ -11,6 +11,10 @@ export function generateTimetableData(timetableDataArray, filterOptions, second)
         if (semester){
             semester.timetable.forEach((classItem) => {
                 const classKey = `${module.moduleCode} + ${classItem.lessonType}`;
+
+                if (classItem.day === day) {
+                    return;
+                }
   
                 if (!classes[classKey]) {
                     classes[classKey] = {
