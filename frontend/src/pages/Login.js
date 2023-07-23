@@ -28,7 +28,7 @@ function Login({ setLoggedIn, setAccount }) {
             })
             .then(res => {
                 if (res.data === "exists") {
-                    alert(`/${username}/`)
+                    //alert(`/${username}/`)
                     setLoggedIn(true)
                     setAccount(username)
                     

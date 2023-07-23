@@ -36,6 +36,12 @@ app.get("/", async (req, res) => {
     });
 });
 
+app.get("/test", async (req, res) => {
+    return res.json({
+      message: "test",
+    });
+});
+
 
 app.post("/", async (req, res) => {
     const {username, password} = req.body;
