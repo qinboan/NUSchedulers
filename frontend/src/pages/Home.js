@@ -80,8 +80,6 @@ function Home({account}) {
                 ))}   
             </div>
 
-            <div className="Deadlines">
-                <h1>Deadlines</h1>
             <div className="Tasks">
                 <h1>Tasks</h1>
             </div>
