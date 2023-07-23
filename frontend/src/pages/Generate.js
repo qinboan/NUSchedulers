@@ -85,7 +85,7 @@ function Generate({account, filterOptions}) {
             const generatedTimetableData = generateTimetableData(timeTableDataArray, filterOptions);
             setTimetableData(generatedTimetableData);
             //setTimetableData(timeTableDataArray);
-            await axios.post("http://localhost:3001/timetable", {
+            await axios.post("https://nuschedulers.vercel.app/timetable", {
                 username: account,
                 modules: moduleCodes,
                 timetableData: generatedTimetableData,

@@ -1,11 +1,12 @@
 const express = require('express')
-const dotenv = require('dotenv').config()
+const dotenv = require('dotenv')
+dotenv.config();
 const mongoose = require('mongoose')
 const UserModel = require('./models/Users')
 const cors = require("cors")
 const TimetableScheduleModel = require('./models/TimetableSchedule')
 
-const port = 3001
+const port = 3001;
 
 const app = express()
 app.use(express.urlencoded({ extended: true }))
