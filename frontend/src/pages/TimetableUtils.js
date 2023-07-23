@@ -3,7 +3,7 @@ export function generateTimetableData(timetableDataArray, filterOptions, second)
     const timetable = {};
     const days = {};
     let conflict = false;
-    let unablePref = false;
+    let allpref = false;
     const avoid = filterOptions.day;
     const start = filterOptions.start === '' ? '0000' : filterOptions.start;
     const end = filterOptions.end === '' ? '2359' : filterOptions.end;
@@ -58,6 +58,10 @@ export function generateTimetableData(timetableDataArray, filterOptions, second)
             };
         }
 
+        //alert(classItem.moduleCode + " " + classItem.lessonType);
+        let unablePref = false;
+        let possibleClasses = false;
+
         classItem.schedule.forEach((classInformation, index, arr) => {
             const hasOverlap = Object.values(timetable).some((otherClass) => {
                 return otherClass.schedule.some((scheduleItem) => {
@@ -83,15 +87,25 @@ export function generateTimetableData(timetableDataArray, filterOptions, second)
 
     
             if (timetable[classKey].schedule.length === 0) {
-                if ((!hasOverlap && checkPref )|| index + 1 === arr.length) {
 
-                    if (index + 1 === arr.length && hasOverlap) {
-                        conflict = true
+                if ((index + 1 === arr.length && !checkPref)) {
+                    unablePref = true;
+                    allpref = true;
+                } 
+
+                else if (index + 1 === arr.length && possibleClasses) {
+                    unablePref = true;
+                    allpref = true;
+                }
+
+                else if (index + 1 === arr.length) {
+
+                    if (hasOverlap && !possibleClasses) {
+                        conflict = true;
+                        //alert("1")
                     }
-                    
-                    if (index + 1 === arr.length && !checkPref) {
-                        unablePref = true;
-                    }
+
+                    //alert("bopes")
 
                     timetable[classKey].schedule.push({
                         classNo: classInformation.classNo,
@@ -130,21 +144,367 @@ export function generateTimetableData(timetableDataArray, filterOptions, second)
                                     });
                                 } else {
                                     console.log(`No suitable class found for ${classItem.lessonType}`);
-                                    alert("Conflicting classes");
+                                    //alert("Conflicting first other class");
+                                    conflict = true;
+                                    timetable[classKey].schedule.push({
+                                        classNo: other.classNo,
+                                        day: other.day,
+                                        startTime: other.startTime,
+                                        endTime: other.endTime,
+                                        venue: other.venue,
+                                    });
                                 }
                             }
                         }
                     })
                 }
+
+                else if ((!hasOverlap && checkPref )) {
+                    //alert("found")
+                    let check = false;
+
+                    classItem.schedule.forEach((other) => {
+                        if (classInformation.classNo === other.classNo) {
+
+                            if (classInformation.day !== other.day || classInformation.startTime !== other.startTime) {
+
+                                const hasOverlap = Object.values(timetable).some((otherClass) => {
+                                    return otherClass.schedule.some((scheduleItem) => {
+                                        const overlap =
+                                            other.day === scheduleItem.day &&
+                                            (
+                                                (other.startTime >= scheduleItem.startTime && other.startTime < scheduleItem.endTime) ||
+                                                (other.endTime > scheduleItem.startTime && other.endTime <= scheduleItem.endTime) ||
+                                                (other.startTime <= scheduleItem.startTime && other.endTime >= scheduleItem.endTime)
+                                            );
+                
+                                        return overlap;
+                                    });
+                                });
+
+                                const checkPref = Object.values(avoid).every((avoidDay) => {
+                                    return (
+                                        other.day !== avoidDay &&
+                                        other.startTime >= start &&
+                                        other.endTime <= end
+                                    );
+                                });
+
+                                if (!hasOverlap && checkPref) {
+                                    timetable[classKey].schedule.push({
+                                        classNo: other.classNo,
+                                        day: other.day,
+                                        startTime: other.startTime,
+                                        endTime: other.endTime,
+                                        venue: other.venue,
+                                    });
+                                } else {
+                                    check = true;
+                                }
+                            }
+                        }
+                    })
+
+                    if (!check) {
+                        timetable[classKey].schedule.push({
+                            classNo: classInformation.classNo,
+                            day: classInformation.day,
+                            startTime: classInformation.startTime,
+                            endTime: classInformation.endTime,
+                            venue: classInformation.venue,
+                        });
+                    }
+                }
+
+                else if ((!hasOverlap && !checkPref)) {
+                    possibleClasses = true;
+                }
             }
         });
+
+        if (unablePref) {
+            //alert("unablePref")
+    
+                classItem.schedule.forEach((classInformation, index, arr) => {
+                    const hasOverlap = Object.values(timetable).some((otherClass) => {
+                        return otherClass.schedule.some((scheduleItem) => {
+                            const overlap =
+                                classInformation.day === scheduleItem.day &&
+                                (
+                                    (classInformation.startTime >= scheduleItem.startTime && classInformation.startTime < scheduleItem.endTime) ||
+                                    (classInformation.endTime > scheduleItem.startTime && classInformation.endTime <= scheduleItem.endTime) ||
+                                    (classInformation.startTime <= scheduleItem.startTime && classInformation.endTime >= scheduleItem.endTime)
+                                );
+        
+                            return overlap;
+                        });
+                    });
+
+                    if (timetable[classKey].schedule.length === 0) {
+        
+                        if (index + 1 === arr.length) {
+        
+                            if (hasOverlap) {
+                                conflict = true;
+                                //alert("2")
+                            }
+        
+                            timetable[classKey].schedule.push({
+                                classNo: classInformation.classNo,
+                                day: classInformation.day,
+                                startTime: classInformation.startTime,
+                                endTime: classInformation.endTime,
+                                venue: classInformation.venue,
+                            });
+        
+                            classItem.schedule.forEach((other) => {
+                                if (classInformation.classNo === other.classNo) {
+        
+                                    if (classInformation.day !== other.day || classInformation.startTime !== other.startTime) {
+        
+                                        const hasOverlap = Object.values(timetable).some((otherClass) => {
+                                            return otherClass.schedule.some((scheduleItem) => {
+                                                const overlap =
+                                                    other.day === scheduleItem.day &&
+                                                    (
+                                                        (other.startTime >= scheduleItem.startTime && other.startTime < scheduleItem.endTime) ||
+                                                        (other.endTime > scheduleItem.startTime && other.endTime <= scheduleItem.endTime) ||
+                                                        (other.startTime <= scheduleItem.startTime && other.endTime >= scheduleItem.endTime)
+                                                    );
+                        
+                                                return overlap;
+                                            });
+                                        });
+        
+                                        if (!hasOverlap) {
+                                            timetable[classKey].schedule.push({
+                                                classNo: other.classNo,
+                                                day: other.day,
+                                                startTime: other.startTime,
+                                                endTime: other.endTime,
+                                                venue: other.venue,
+                                            });
+                                        } else {
+                                            console.log(`No suitable class found for ${classItem.lessonType}`);
+                                            //alert("Conflicting other class");
+                                            conflict = true;
+                                            timetable[classKey].schedule.push({
+                                                classNo: other.classNo,
+                                                day: other.day,
+                                                startTime: other.startTime,
+                                                endTime: other.endTime,
+                                                venue: other.venue,
+                                            });
+                                        }
+                                    }
+                                }
+                            })
+                        }
+        
+                        else if ((!hasOverlap)) {
+        
+                            let check = false;
+        
+                            classItem.schedule.forEach((other) => {
+                                if (classInformation.classNo === other.classNo) {
+        
+                                    if (classInformation.day !== other.day || classInformation.startTime !== other.startTime) {
+        
+                                        const hasOverlap = Object.values(timetable).some((otherClass) => {
+                                            return otherClass.schedule.some((scheduleItem) => {
+                                                const overlap =
+                                                    other.day === scheduleItem.day &&
+                                                    (
+                                                        (other.startTime >= scheduleItem.startTime && other.startTime < scheduleItem.endTime) ||
+                                                        (other.endTime > scheduleItem.startTime && other.endTime <= scheduleItem.endTime) ||
+                                                        (other.startTime <= scheduleItem.startTime && other.endTime >= scheduleItem.endTime)
+                                                    );
+                        
+                                                return overlap;
+                                            });
+                                        });
+        
+                                        if (!hasOverlap) {
+                                            timetable[classKey].schedule.push({
+                                                classNo: other.classNo,
+                                                day: other.day,
+                                                startTime: other.startTime,
+                                                endTime: other.endTime,
+                                                venue: other.venue,
+                                            });
+                                        } else {
+                                            check = true;
+                                        }
+                                    }
+                                }
+                            })
+        
+                            if (!check) {
+                                timetable[classKey].schedule.push({
+                                    classNo: classInformation.classNo,
+                                    day: classInformation.day,
+                                    startTime: classInformation.startTime,
+                                    endTime: classInformation.endTime,
+                                    venue: classInformation.venue,
+                                });
+                            }
+                        }
+                    }
+    
+        
+                    // if (timetable[classKey].schedule.length === 0) {
+    
+                    //     if (!hasOverlap|| index + 1 === arr.length) {
+    
+                    //         if (index + 1 === arr.length && hasOverlap) {
+                    //             conflict = true
+                    //         }
+    
+                    //         timetable[classKey].schedule.push({
+                    //             classNo: classInformation.classNo,
+                    //             day: classInformation.day,
+                    //             startTime: classInformation.startTime,
+                    //             endTime: classInformation.endTime,
+                    //             venue: classInformation.venue,
+                    //         });
+    
+                    //         classItem.schedule.forEach((other) => {
+                    //             if (classInformation.classNo === other.classNo) {
+    
+                    //                 if (classInformation.day !== other.day || classInformation.startTime !== other.startTime) {
+    
+                    //                     const hasOverlap = Object.values(timetable).some((otherClass) => {
+                    //                         return otherClass.schedule.some((scheduleItem) => {
+                    //                             const overlap =
+                    //                                 other.day === scheduleItem.day &&
+                    //                                 (
+                    //                                     (other.startTime >= scheduleItem.startTime && other.startTime < scheduleItem.endTime) ||
+                    //                                     (other.endTime > scheduleItem.startTime && other.endTime <= scheduleItem.endTime) ||
+                    //                                     (other.startTime <= scheduleItem.startTime && other.endTime >= scheduleItem.endTime)
+                    //                                 );
+                                                    
+                    //                             return overlap;
+                    //                         });
+                    //                     });
+    
+                    //                     if (!hasOverlap) {
+                    //                         timetable[classKey].schedule.push({
+                    //                             classNo: other.classNo,
+                    //                             day: other.day,
+                    //                             startTime: other.startTime,
+                    //                             endTime: other.endTime,
+                    //                             venue: other.venue,
+                    //                         });
+                    //                     } else {
+                    //                         console.log(`No suitable class found for ${classItem.lessonType}`);
+                    //                         alert("Conflicting classes");
+                    //                         timetable[classKey].schedule.push({
+                    //                             classNo: other.classNo,
+                    //                             day: other.day,
+                    //                             startTime: other.startTime,
+                    //                             endTime: other.endTime,
+                    //                             venue: other.venue,
+                    //                         });
+                    //                     }
+                    //                 }
+                    //             }
+                    //         })
+                    //     }
+                    // }
+                });
+        }    
     });
 
-    if (conflict) {
+    // if (unablePref) {
+
+    //     sortedClasses.forEach((classItem) => {
+
+    //         classItem.schedule.forEach((classInformation, index, arr) => {
+    //             const hasOverlap = Object.values(timetable).some((otherClass) => {
+    //                 return otherClass.schedule.some((scheduleItem) => {
+    //                     const overlap =
+    //                         classInformation.day === scheduleItem.day &&
+    //                         (
+    //                             (classInformation.startTime >= scheduleItem.startTime && classInformation.startTime < scheduleItem.endTime) ||
+    //                             (classInformation.endTime > scheduleItem.startTime && classInformation.endTime <= scheduleItem.endTime) ||
+    //                             (classInformation.startTime <= scheduleItem.startTime && classInformation.endTime >= scheduleItem.endTime)
+    //                         );
+    
+    //                     return overlap;
+    //                 });
+    //             });
+
+    
+    //             if (timetable[classKey].schedule.length === 0) {
+
+    //                 if (!hasOverlap|| index + 1 === arr.length) {
+
+    //                     if (index + 1 === arr.length && hasOverlap) {
+    //                         conflict = true
+    //                     }
+
+    //                     timetable[classKey].schedule.push({
+    //                         classNo: classInformation.classNo,
+    //                         day: classInformation.day,
+    //                         startTime: classInformation.startTime,
+    //                         endTime: classInformation.endTime,
+    //                         venue: classInformation.venue,
+    //                     });
+
+    //                     classItem.schedule.forEach((other) => {
+    //                         if (classInformation.classNo === other.classNo) {
+
+    //                             if (classInformation.day !== other.day || classInformation.startTime !== other.startTime) {
+
+    //                                 const hasOverlap = Object.values(timetable).some((otherClass) => {
+    //                                     return otherClass.schedule.some((scheduleItem) => {
+    //                                         const overlap =
+    //                                             other.day === scheduleItem.day &&
+    //                                             (
+    //                                                 (other.startTime >= scheduleItem.startTime && other.startTime < scheduleItem.endTime) ||
+    //                                                 (other.endTime > scheduleItem.startTime && other.endTime <= scheduleItem.endTime) ||
+    //                                                 (other.startTime <= scheduleItem.startTime && other.endTime >= scheduleItem.endTime)
+    //                                             );
+                                                
+    //                                         return overlap;
+    //                                     });
+    //                                 });
+
+    //                                 if (!hasOverlap) {
+    //                                     timetable[classKey].schedule.push({
+    //                                         classNo: other.classNo,
+    //                                         day: other.day,
+    //                                         startTime: other.startTime,
+    //                                         endTime: other.endTime,
+    //                                         venue: other.venue,
+    //                                     });
+    //                                 } else {
+    //                                     console.log(`No suitable class found for ${classItem.lessonType}`);
+    //                                     alert("Conflicting classes");
+    //                                     timetable[classKey].schedule.push({
+    //                                         classNo: other.classNo,
+    //                                         day: other.day,
+    //                                         startTime: other.startTime,
+    //                                         endTime: other.endTime,
+    //                                         venue: other.venue,
+    //                                     });
+    //                                 }
+    //                             }
+    //                         }
+    //                     })
+    //                 }
+    //             }
+    //         });
+    //     });
+
+    //}
+
+
+    if (conflict) { 
         alert("Conflicting classes");
     }
 
-    if (unablePref) {
+    if (allpref) {
         alert("Unable to fulfil all advanced filter preferences")
     }
 
