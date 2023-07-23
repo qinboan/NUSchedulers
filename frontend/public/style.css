@@ -56,7 +56,7 @@ body, html {
     position: absolute;
     top: 10%;
     left: 5%;
-    font-family: 'Cormorant'; font-size: 15px;
+    font-family: 'Cormorant'; font-size: 12px;
 }
 
 .Tasks {
@@ -491,7 +491,7 @@ body, html {
 
 .Start {
     position: absolute;
-    top: 55%;
+    top: 40%;
     left: 32%;
     transform: translate(-50%, -50%);
     font-family: 'Comissioner'; font-size: 22px;
@@ -500,7 +500,7 @@ body, html {
 .selectStart {
     position: absolute;
     z-index: 6;
-    top: 55%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-family: 'Comissioner'; font-size: 22px;
@@ -509,7 +509,7 @@ body, html {
 
 .End {
     position: absolute;
-    top: 70%;
+    top: 55%;
     left: 33%;
     transform: translate(-50%, -50%);
     font-family: 'Comissioner'; font-size: 22px;
@@ -518,7 +518,7 @@ body, html {
 .selectEnd {
     position: absolute;
     z-index: 4;
-    top: 70%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-family: 'Comissioner'; font-size: 22px;

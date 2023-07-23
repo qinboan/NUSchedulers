@@ -65,13 +65,13 @@ function Home({account}) {
 
     return (
         <div className="Home">
-            <div className="Header">
-                <h1>Welcome, {account}!</h1>
-            </div>
-            
-            {/* <div className="Schedule">
-                <h1>My Schedule</h1>
+            {/* <div className="Header">
+                <h1>{account}'s Timetable</h1>
             </div> */}
+            
+            <div className="Header">
+                <h1>Timetable</h1>
+            </div>
 
             <div className="Modules-home">
                 <h1>Modules Selected</h1>
