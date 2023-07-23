@@ -18,7 +18,7 @@ function Create() {
     async function create(e) {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:3001/create", {
+            await axios.post("https://nuschedulers.vercel.app/create", {
                 username, password
             })
             .then(res=>{
