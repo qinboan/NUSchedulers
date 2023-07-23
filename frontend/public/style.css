@@ -98,6 +98,11 @@ body, html {
     height: 50px;
     width: 200px;
     border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+.editTimetable button:active {
+    transform: scale(0.95);
 }
 
 .generateTimetable {
@@ -112,7 +117,12 @@ body, html {
     height: 50px;
     width: 200px;
     border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
 }
+.generateTimetable button:active {
+    transform: scale(0.95);
+  }
 
 .about {
     position: absolute;
@@ -176,6 +186,11 @@ body, html {
     height: 60px;
     width: 240px;
     border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+.login input[type="submit"]:active {
+    transform: scale(0.95);
 }
 
 .login a {
@@ -190,7 +205,12 @@ body, html {
     height: 60px;
     width: 240px;
     border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
 }
+.login button:active {
+    transform: scale(0.95);
+  }
 
 .notNew {
     position: absolute;
@@ -237,6 +257,11 @@ body, html {
     height: 60px;
     width: 240px;
     border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+.create input[type="submit"]:active {
+    transform: scale(0.95);
 }
 
 .create a {
@@ -251,7 +276,12 @@ body, html {
     height: 60px;
     width: 240px;
     border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
 }
+.create button:active {
+    transform: scale(0.95);
+  }
 
 .Generate {
     position: absolute;
@@ -342,6 +372,11 @@ body, html {
     background:paleturquoise;
     height: 33px;
     width: 100px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+.addTask:active {
+    transform: scale(0.95);
 }
 
 .task {
@@ -356,11 +391,17 @@ body, html {
     background: paleturquoise;
   }
 
+
   .icons {
     display: flex;
     align-items: center;
     font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
   }
+  .icons:active {
+    transform: scale(0.95);
+}
   
   
 
@@ -376,7 +417,12 @@ body, html {
     height: 50px;
     width: 200px;
     border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
 }
+.advanced button:active {
+    transform: scale(0.95);
+  }
 
 .generate {
     position: absolute;
@@ -391,7 +437,12 @@ body, html {
     width: 250px;
     border-radius: 25px;
     font-size: 23px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
 }
+.generate button:active {
+    transform: scale(0.95);
+  }
 
 .Filter {
     position: absolute;
@@ -487,7 +538,12 @@ body, html {
     width: 200px;
     border-radius: 25px;
     font-size: 22px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
 }
+.save button:active {
+    transform: scale(0.95);
+  }
 
 .Edit {
     position: absolute;
@@ -510,7 +566,12 @@ body, html {
     height: 50px;
     width: 200px;
     border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
 }
+.cancel button:active {
+    transform: scale(0.95);
+  }
 
 .saveTimetable {
     position: absolute;
@@ -524,7 +585,12 @@ body, html {
     height: 50px;
     width: 150px;
     border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
 }
+.saveTimetable button:active {
+    transform: scale(0.95);
+  }
 
 .cancelTimetable {
     position: absolute;
@@ -538,7 +604,12 @@ body, html {
     height: 50px;
     width: 150px;
     border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
 }
+.cancelTimetable button:active {
+    transform: scale(0.95);
+  }
 
  .timetable {
     justify-content: center;

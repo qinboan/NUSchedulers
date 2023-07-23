@@ -26,7 +26,7 @@ function App() {
         <Route path = "/create" element = { <Create /> } />
         <Route element = { <Authentication loggedIn={loggedIn}/> }>
           <Route path = "/:account/home" element = { <Home account={account} /> } />
-          <Route path = "/:account/generate" element = { <Generate account={account}/> } />
+          <Route path = "/:account/generate" element = { <Generate account={account} filterOptions={filterOptions}/> } />
           <Route path = "/:account/filter" element = { <Filter setFilterOptions={setFilterOptions} account={account} /> } />
           <Route path = "/:account/edit" element = { <Edit account={account}/> } />
           <Route path = "/:account/timetable" element = { <Timetable /> } />

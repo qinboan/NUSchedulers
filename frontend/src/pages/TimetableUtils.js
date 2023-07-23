@@ -1,6 +1,7 @@
-export function generateTimetableData(timetableDataArray) {
+export function generateTimetableData(timetableDataArray, filterOptions) {
     const classes = {};
     const timetable = {};
+    const {day} = filterOptions;
   
     timetableDataArray.forEach((module) => {
         //module.semesterData.forEach((semester) => {
@@ -8,6 +9,10 @@ export function generateTimetableData(timetableDataArray) {
         if (semester){
             semester.timetable.forEach((classItem) => {
                 const classKey = `${module.moduleCode} + ${classItem.lessonType}`;
+
+                if (classItem.day === day) {
+                    return;
+                }
   
                 if (!classes[classKey]) {
                     classes[classKey] = {
