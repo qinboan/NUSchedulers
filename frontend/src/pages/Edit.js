@@ -48,7 +48,7 @@ function Edit(account) {
             </div>
 
             <div className="edit-container">
-                <h1>Edit Timetable</h1>
+                {/* <h1>Edit Timetable</h1> */}
                 {timetableData.map((classData, index) => (
                     <div key={index} className="class-dropdown">
                         <div className="dropdown-header">
@@ -70,7 +70,7 @@ function Edit(account) {
                 ))}
             </div>
 
-            <div className="cancel">
+            <div className="cancelTimetable">
                 <button onClick={() => {
                     setCancel(true);
                 }}

@@ -69,11 +69,11 @@ function Home({account}) {
                 <h1>Welcome, {account}!</h1>
             </div>
             
-            <div className="Schedule">
+            {/* <div className="Schedule">
                 <h1>My Schedule</h1>
-            </div>
+            </div> */}
 
-            <div className="Modules">
+            <div className="Modules-home">
                 <h1>Modules Selected</h1>
                 {modules.map((module, index) => (
                     <pre key={index}>{module}</pre>

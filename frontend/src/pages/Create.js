@@ -45,6 +45,10 @@ function Create() {
                 <h1><SlCalender/> NUSchedulers <SlCalender/></h1>
             </div>
 
+            <div className="sub">
+                <h1>Your personalized timetable generator and task manager</h1>
+            </div>
+
             <div className="notNew">
                 <h1>Not yet a user? <br></br>
                 Join us now!</h1>
@@ -57,6 +61,8 @@ function Create() {
             <div className="createAccount">
                 <h1>Create Account</h1>
             </div>
+
+
     
             <div class="create">
                 <form>
