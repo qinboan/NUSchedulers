@@ -10,11 +10,11 @@ const port = 3001
 const app = express()
 app.use(express.urlencoded({ extended: true }))
 app.use(cors(
-    {
-        origin: ["https://nuschedulers.vercel.app/"],
-        methods: ["POST", "GET"],
-        credentials: true
-    }
+    // {
+    //     origin: ["https://nuschedulers.vercel.app/"],
+    //     methods: ["POST", "GET"],
+    //     credentials: true
+    // }
 ))
 
 app.use(express.json())

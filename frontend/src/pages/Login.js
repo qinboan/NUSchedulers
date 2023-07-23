@@ -23,14 +23,15 @@ function Login({ setLoggedIn, setAccount }) {
     async function login(e) {
         e.preventDefault();
         try {
-            await axios.post("https://nuschedulers.vercel.app/", {
+            await axios.post("http://localhost:3001/", {
                 username, password
             })
             .then(res => {
                 if (res.data === "exists") {
+                    alert(`/${username}/`)
                     setLoggedIn(true)
                     setAccount(username)
-                    //alert(`/${username}/`)
+                    
                     history(`/${username}/home`)
                 } else if (res.data === "userExists") {
                     alert("Wrong password!")
