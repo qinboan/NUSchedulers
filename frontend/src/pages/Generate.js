@@ -91,6 +91,7 @@ function Generate({account, filterOptions}) {
                 timetableData: generatedTimetableData,
             });
             setGenerated(true);
+            //alert(JSON.stringify(filterOptions))
 
             //return generatedTimetableData;
         } catch (error) {

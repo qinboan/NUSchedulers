@@ -1,68 +1,61 @@
 import React from "react";
 import { useState } from "react";
-import MultiSelect from  'react-multiple-select-dropdown-lite'
-import  'react-multiple-select-dropdown-lite/dist/index.css'
-// import axios from "axios";
+import Select from 'react-select'; 
+import makeAnimated from 'react-select/animated';
 import { Navigate, useNavigate } from "react-router-dom";
 
-function Filter({ setFilterOptions, account }) {
+function Filter({ setFilterOptions, account }) {    
 
-    const [day, setDay] = useState('')
-    const [lesson, setLesson] = useState('')
+    const [day, setDay] = useState([])
     const [start, setStart] = useState('')
     const [end, setEnd] = useState('')
     const [save, setSave] = useState(false)
+
+    const animatedComponents = makeAnimated();
     
     if (save) {
         return <Navigate to = {`/${account}/generate`} />; 
     }
 
-    const  changeDays  =  val  => {
-        setDay(val)
+    const  changeStart  =  (selectedOption)  => {
+        setStart(selectedOption.value)
     }
-    const  changeLesson  =  val  => {
-        setLesson(val)
+    const  changeEnd  =  (selectedOption)  => {
+        setEnd(selectedOption.value)
     }
-    const  changeStart  =  val  => {
-        setStart(val)
-    }
-    const  changeEnd  =  val  => {
-        setEnd(val)
-    }
+    const handleSelectDays = (selectedOption) => {
+        const selectedDay = selectedOption;
+        setDay(selectedDay);
+    };
 
     const  days  = [
-        { label:  'Monday', value:  'monday'  },
-        { label:  'Tuesday', value:  'tuesday'  },
-        { label:  'Wednesday', value:  'wednesday'  },
-        { label:  'Thursday', value:  'thursday'  },
-        { label:  'Friday', value:  'friday'  },
+        { label:  'Monday', value:  'Monday'  },
+        { label:  'Tuesday', value:  'Tuesday'  },
+        { label:  'Wednesday', value:  'Wednesday'  },
+        { label:  'Thursday', value:  'Thursday'  },
+        { label:  'Friday', value:  'Friday'  },
     ]
-    const  lessons  = [
-        { label:  'Monday', value:  'monday'  },
-        { label:  'Tuesday', value:  'tuesday'  },
-        { label:  'Wednesday', value:  'wednesday'  },
-        { label:  'Thursday', value:  'thursday'  },
-        { label:  'Friday', value:  'friday'  },
-    ]
+
     const  startTime  = [
-        { label:  'Monday', value:  'monday'  },
-        { label:  'Tuesday', value:  'tuesday'  },
-        { label:  'Wednesday', value:  'wednesday'  },
-        { label:  'Thursday', value:  'thursday'  },
-        { label:  'Friday', value:  'friday'  },
+        { label:  '0800', value:  '0800'  },
+        { label:  '0900', value:  '0900'  },
+        { label:  '1000', value:  '1000'  },
+        { label:  '1100', value:  '1100'  },
+        { label:  '1200', value:  '1200'  },
     ]
     const  endTime  = [
-        { label:  'Monday', value:  'monday'  },
-        { label:  'Tuesday', value:  'tuesday'  },
-        { label:  'Wednesday', value:  'wednesday'  },
-        { label:  'Thursday', value:  'thursday'  },
-        { label:  'Friday', value:  'friday'  },
+        { label:  '1400', value:  '1400'  },
+        { label:  '1500', value:  '1500'  },
+        { label:  '1600', value:  '1600'  },
+        { label:  '1700', value:  '1700'  },
+        { label:  '1800', value:  '1800'  },
     ]
 
     const handleSave = () => {
+        const selectedDays = day.map((selectedDay) => selectedDay.value);
+
         const options = {
-            day,
-            lesson,
+            day: selectedDays,
             start,
             end,
         };
@@ -80,47 +73,38 @@ function Filter({ setFilterOptions, account }) {
 
             <div  className="Days">
                 <h4>No classes on : </h4>
-                {/* {value} */}
             </div>
             <div className="selectDays"> 
-                <MultiSelect
-                    onChange={changeDays}
+                <Select
+                    isMulti
+                    components={animatedComponents}
+                    onChange={handleSelectDays}
                     options={days}
+                    className="days"
+                    classNamePrefix="days"
                 />
             </div>
 
-            <div  className="Lessons">
-                <h4>Fixed classes : </h4>
-                {/* {value} */}
-            </div>
-            <div className="selectLessons"> 
-                <MultiSelect
-                    onChange={changeLesson}
-                    options={lessons}
-                />
-            </div>
 
-            <div  className="Start">
-                <h4>Start classes from : </h4>
-                {/* {value} */}
-            </div>
-            <div className="selectStart"> 
-                <MultiSelect
-                    onChange={changeStart}
-                    options={startTime}
-                />
-            </div>
+                <div  className="Start">
+                    <h4>Start classes from : </h4>
+                </div>
+                <div className="selectStart"> 
+                    <Select
+                        onChange={changeStart}
+                        options={startTime}
+                    />
+                </div>
 
-            <div  className="End">
-                <h4>End classes at : </h4>
-                {/* {value} */}
-            </div>
-            <div className="selectEnd"> 
-                <MultiSelect
-                    onChange={changeEnd}
-                    options={endTime}
-                />
-            </div>
+                <div  className="End">
+                    <h4>End classes at : </h4>
+                </div>
+                <div className="selectEnd"> 
+                    <Select
+                        onChange={changeEnd}
+                        options={endTime}
+                    />
+                </div>
 
             <div className="save">
                 <button onClick={handleSave}>Save</button>

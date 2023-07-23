@@ -1,6 +1,9 @@
-export function generateTimetableData(timetableDataArray) {
+export function generateTimetableData(timetableDataArray, filterOptions, second) {
     const classes = {};
     const timetable = {};
+    const days = {};
+    let conflict = false;
+
   
     timetableDataArray.forEach((module) => {
         //module.semesterData.forEach((semester) => {
@@ -33,7 +36,6 @@ export function generateTimetableData(timetableDataArray) {
         const countB = b.schedule.length;
         return countA - countB;
     });
-  
 
     sortedClasses.forEach((classItem) => {
 
@@ -46,7 +48,7 @@ export function generateTimetableData(timetableDataArray) {
             };
         }
 
-        classItem.schedule.forEach((classInformation) => {
+        classItem.schedule.forEach((classInformation, index, arr) => {
             const hasOverlap = Object.values(timetable).some((otherClass) => {
                 return otherClass.schedule.some((scheduleItem) => {
                     const overlap =
@@ -61,63 +63,74 @@ export function generateTimetableData(timetableDataArray) {
                 });
             });
     
-            if (!hasOverlap && timetable[classKey].schedule.length === 0) {
-                timetable[classKey].schedule.push({
-                    classNo: classInformation.classNo,
-                    day: classInformation.day,
-                    startTime: classInformation.startTime,
-                    endTime: classInformation.endTime,
-                    venue: classInformation.venue,
-                });
+            if (timetable[classKey].schedule.length === 0) {
+                if (!hasOverlap || index + 1 === arr.length) {
 
-                classItem.schedule.forEach((other) => {
-                    if (classInformation.classNo === other.classNo) {
+                    if (index + 1 === arr.length && hasOverlap) {
+                        conflict = true
+                    }
 
-                        if (classInformation.day !== other.day || classInformation.startTime !== other.startTime) {
+                    timetable[classKey].schedule.push({
+                        classNo: classInformation.classNo,
+                        day: classInformation.day,
+                        startTime: classInformation.startTime,
+                        endTime: classInformation.endTime,
+                        venue: classInformation.venue,
+                    });
 
-                            const hasOverlap = Object.values(timetable).some((otherClass) => {
-                                return otherClass.schedule.some((scheduleItem) => {
-                                    const overlap =
-                                        other.day === scheduleItem.day &&
-                                        (
-                                            (other.startTime >= scheduleItem.startTime && other.startTime < scheduleItem.endTime) ||
-                                            (other.endTime > scheduleItem.startTime && other.endTime <= scheduleItem.endTime) ||
-                                            (other.startTime <= scheduleItem.startTime && other.endTime >= scheduleItem.endTime)
-                                        );
+                    classItem.schedule.forEach((other) => {
+                        if (classInformation.classNo === other.classNo) {
+
+                            if (classInformation.day !== other.day || classInformation.startTime !== other.startTime) {
+
+                                const hasOverlap = Object.values(timetable).some((otherClass) => {
+                                    return otherClass.schedule.some((scheduleItem) => {
+                                        const overlap =
+                                            other.day === scheduleItem.day &&
+                                            (
+                                                (other.startTime >= scheduleItem.startTime && other.startTime < scheduleItem.endTime) ||
+                                                (other.endTime > scheduleItem.startTime && other.endTime <= scheduleItem.endTime) ||
+                                                (other.startTime <= scheduleItem.startTime && other.endTime >= scheduleItem.endTime)
+                                            );
                 
-                                    return overlap;
+                                        return overlap;
+                                    });
                                 });
-                            });
 
-                            if (!hasOverlap) {
-                                timetable[classKey].schedule.push({
-                                    classNo: other.classNo,
-                                    day: other.day,
-                                    startTime: other.startTime,
-                                    endTime: other.endTime,
-                                    venue: other.venue,
-                                });
-                            } else {
-                                console.log(`No suitable class found for ${classItem.lessonType}`);
-                                alert("Conflicting classes");
+                                if (!hasOverlap) {
+                                    timetable[classKey].schedule.push({
+                                        classNo: other.classNo,
+                                        day: other.day,
+                                        startTime: other.startTime,
+                                        endTime: other.endTime,
+                                        venue: other.venue,
+                                    });
+                                } else {
+                                    console.log(`No suitable class found for ${classItem.lessonType}`);
+                                    alert("Conflicting classes");
+                                }
                             }
                         }
-                    }
-                })
-            } 
+                    })
+                }
+            }
         });
     });
 
-    Object.values(timetable).forEach((classItem) => {
-        const classKey = `${classItem.moduleCode} + ${classItem.lessonType}`;
+    // Object.values(timetable).forEach((classItem) => {
+    //     const classKey = `${classItem.moduleCode} + ${classItem.lessonType}`;
     
-        if (timetable[classKey].schedule.length === 0) {
+    //     if (timetable[classKey].schedule.length === 0) {
 
-            console.log(`No suitable class found for ${classItem.lessonType}`);
-            alert("Conflicting classes");
+    //         console.log(`No suitable class found for ${classItem.lessonType}`);
+    //         alert("Conflicting classes");
 
-        }
-    });
+    //     }
+    // });
+
+    if (conflict) {
+        alert("Conflicting classes");
+    }
 
 
     return Object.values(timetable);

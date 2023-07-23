@@ -15,9 +15,10 @@ function Edit(account) {
         // Function to fetch the timetable data from your backend API
         const fetchTimetableData = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/timetable/${account}`);
+                const response = await axios.get(`https://nuschedulers.vercel.app/timetable/${account.account}`);
                 setTimetableData(response.data.timetableData); // Store the fetched data in the state
                 setModules(response.data.modules)
+                
             } catch (error) {
                 console.error("Error fetching timetable data:", error);
             }
