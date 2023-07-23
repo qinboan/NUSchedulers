@@ -3,6 +3,7 @@ const dotenv = require('dotenv').config()
 const mongoose = require('mongoose')
 const UserModel = require('./models/Users')
 const cors = require("cors")
+const TimetableScheduleModel = require('./models/TimetableSchedule')
 
 const port = 3001
 
@@ -20,16 +21,6 @@ mongoose.connect(mongooseUrl, {
     console.log("Connected to database");
   })
   .catch((e) => console.log(e));
-
-app.get("/getUsers", (req, res) => {
-    // UserModel.find({}, (error, result) => {
-    //     if (error) {
-    //         res.json(error)
-    //     }  else {
-    //         res.json(result)
-    //     }
-    // })
-})
 
 app.post("/", async (req, res) => {
     const {username, password} = req.body;
@@ -70,4 +61,60 @@ app.post("/create", async (req, res) => {
         res.json("fail")
     }
 })
+
+app.post("/timetable", async (req, res) => {
+    const { username, modules, timetableData } = req.body;
+    const data = {
+        username:username,
+        modules:modules,
+        timetableData:timetableData
+    }
+  
+    try {
+      // Find the user by username
+      const user = await TimetableScheduleModel.findOne({ username: username });
+  
+      if (!user) {
+        res.json("doesNotExist")
+        await TimetableScheduleModel.insertMany(data)
+        //return res.status(404).json("User not found");
+      }
+  
+      // Update the user's timetable data with the new data
+      else {
+        user.modules = modules
+        user.timetableData = timetableData
+        await user.save()
+        return res.json("Timetable data updated successfully")
+      }
+  
+      
+    } catch (e) {
+      res.status(500).json("Failed to store timetable data");
+    }
+});
+
+app.get("/timetable/:username", async (req, res) => {
+    const { username } = req.params;
+  
+    try {
+      // Find the user by username
+      const user = await TimetableScheduleModel.findOne({ username: username });
+  
+      if (!user) {
+        const empty = {
+            username:"",
+            timetableData:[],
+            modules:[]
+        }
+        return res.json(empty);
+      }
+  
+      // Return the timetable data of the user
+      res.json(user);
+    } catch (e) {
+      res.status(500).json("Failed to fetch timetable data");
+    }
+});
+
 app.listen(port, () => console.log(`Server started on port ${port}`))

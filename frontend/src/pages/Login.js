@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 
-function Login({ setLoggedIn }) {
+function Login({ setLoggedIn, setAccount }) {
     const [goCreateAccount, setGoCreateAccount] = React.useState(false);
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -10,7 +10,7 @@ function Login({ setLoggedIn }) {
     const history = useNavigate();
 
     if (goCreateAccount) {
-        return <Navigate to = "/create" />; 
+        history(`/create`)
     }
 
     async function login(e) {
@@ -21,8 +21,10 @@ function Login({ setLoggedIn }) {
             })
             .then(res => {
                 if (res.data === "exists") {
-                    setLoggedIn(true);
-                    history("/home", {state:{id:username}})
+                    setLoggedIn(true)
+                    setAccount(username)
+                    //alert(`/${username}/`)
+                    history(`/${username}/home`)
                 } else if (res.data === "userExists") {
                     alert("Wrong password!")
                 } else if (res.data === "doesNotExist") {

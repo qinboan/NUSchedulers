@@ -1,32 +1,33 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import Select from 'react-select'; 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { generateTimetableData } from './TimetableUtils';
 import Home from "./Home";
+import Filter from "./Filter";
 
 
-function Generate() {
+function Generate({account, filterOptions}) {
 
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [addedModules, setAddedModules] = useState([]);
     const [timetableData, setTimetableData] = useState([]);
-    const [showTimetable, setShowTimetable] = useState(false);
-
+    const [generated, setGenerated] = useState(false);
+    const [cancel, setCancel] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
-        try {
-            const response = await axios.get('https://api.nusmods.com/v2/2023-2024/moduleList.json');
-            setData(response.data); // Store the fetched data in the state
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
+            try {
+                const response = await axios.get('https://api.nusmods.com/v2/2023-2024/moduleList.json');
+                setData(response.data); // Store the fetched data in the state
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
 
-    fetchData();
+        fetchData();
     }, []);
 
     useEffect(() => {
@@ -69,7 +70,6 @@ function Generate() {
         const moduleCodes = addedModules.map((module) => module.moduleCode);
 
         const apiRequests = [];
-        //alert(moduleCodes);
     
         try {
             moduleCodes.forEach((moduleCode) => {
@@ -81,20 +81,18 @@ function Generate() {
             const responses = await Promise.all(apiRequests);
 
             const timeTableDataArray = responses.map((response) => response.data);
-            
-
-        //   const response = await axios.get('https://api.nusmods.com/v2/2022-2023/modules/CS1010S.json', {
-        //     params: {
-        //       modules: moduleCodes.join(','), // Convert module codes to a comma-separated string
-        //     },
-        //   });
-          //setGenerate(true);
-            const generatedTimetableData = generateTimetableData(timeTableDataArray);
+    
+            const generatedTimetableData = generateTimetableData(timeTableDataArray, filterOptions);
             setTimetableData(generatedTimetableData);
             //setTimetableData(timeTableDataArray);
-            setShowTimetable(true);
+            await axios.post("http://localhost:3001/timetable", {
+                username: account,
+                modules: moduleCodes,
+                timetableData: generatedTimetableData,
+            });
+            setGenerated(true);
 
-          
+            //return generatedTimetableData;
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -110,11 +108,17 @@ function Generate() {
 
    
     if (advanced) {
-        return <Navigate to = "/filter" />; 
+        return <Navigate to = {`/${account}/filter`} />; 
+        //return <Filter setFilterOptions={setFilterOptions} account={account} />
     }
 
-    if (showTimetable) {
-        return <Home timetableData = {timetableData} showTimetable={showTimetable}/>
+    if (generated) {
+        //return <Home timetableData = {timetableData} showTimetable={showTimetable}/>
+        return <Navigate to = {`/${account}/home`} />; 
+    }
+
+    if (cancel) {
+        return <Navigate to = {`/${account}/home`} />; 
     }
 
     return (
@@ -180,14 +184,15 @@ function Generate() {
                 </button>
             </div>
 
-            {/* {showTimetable && (
-                <div className="timetabledata">
-                    <h4>TimeTable Data: </h4>
-                    <pre>{JSON.stringify(timetableData, null, 2)}</pre>
-                </div>
-            )} */}
-            {/* Render the timetable component if there is timetableData */}
-            {/* {showTimetable ? <Timetable timetableData={timetableData} /> : null} */}
+            <div className="cancel">
+            <button onClick={() => {
+                    setCancel(true);
+                }}
+                >
+                    {" "}
+                    Cancel
+                </button>
+            </div>
             
         </div>
     )

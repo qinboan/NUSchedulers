@@ -1,28 +1,70 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
 import Timetable from "./Timetable";
 
 
-function Home({timetableData, showTimetable}) {
+function Home({account}) {
+
+    //alert(`/${account}/`)
 
     const [check, setCheck] = useState(false);
     const [edit, setEdit] = useState(false);
     const [generate, setGenerate] = useState(false);
+    const [timetableData, setTimetableData] = useState([]);
+    const [showTimetable, setShowTimetable] = useState(false);
+    const [modules, setModules] = useState([]);
     const changeCheck = !check;
 
+    //const history = useNavigate();
+
+    // useEffect(() => {
+    //     // Reset the generate state to false after the navigation to the "Generate" page
+    //     setGenerate(false);
+    //   }, [generate]);
+
+    useEffect(() => {
+        // Function to fetch the timetable data from your backend API
+        const fetchTimetableData = async () => {
+          try {
+            const response = await axios.get(`http://localhost:3001/timetable/${account}`);
+            setTimetableData(response.data.timetableData); // Store the fetched data in the state
+            setModules(response.data.modules)
+            setShowTimetable(true); // Set showTimetable to true to display the timetable
+          } catch (error) {
+            console.error("Error fetching timetable data:", error);
+          }
+        };
+    
+        fetchTimetableData(); // Call the fetchTimetableData function when the component mounts
+    }, [account]);
+
     if (edit) {
-        return <Navigate to = "/edit" />; 
+        return <Navigate to = {`/${account}/edit`} />; 
     }
 
     if (generate) {
-        return <Navigate to = "/generate" />; 
+        //alert(`/${account}/generate`)
+        return <Navigate to = {`/${account}/generate`} />; 
+        //history(`/${username}/generate`)
     }
 
     return (
         <div className="Home">
+            <div className="Header">
+                <h1>Welcome, {account}!</h1>
+            </div>
+            
             <div className="Schedule">
                 <h1>My Schedule</h1>
+            </div>
+
+            <div className="Modules">
+                <h1>Modules Selected</h1>
+                {modules.map((module, index) => (
+                    <pre key={index}>{module}</pre>
+                ))}   
             </div>
 
             <div className="Deadlines">

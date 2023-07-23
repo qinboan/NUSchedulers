@@ -73,7 +73,7 @@ export function generateTimetableData(timetableDataArray) {
                 classItem.schedule.forEach((other) => {
                     if (classInformation.classNo === other.classNo) {
 
-                        if (classInformation.day !== other.day && classInformation.startTime !== other.startTime) {
+                        if (classInformation.day !== other.day || classInformation.startTime !== other.startTime) {
 
                             const hasOverlap = Object.values(timetable).some((otherClass) => {
                                 return otherClass.schedule.some((scheduleItem) => {
@@ -102,7 +102,6 @@ export function generateTimetableData(timetableDataArray) {
                                 alert("Conflicting classes");
                             }
                         }
-
                     }
                 })
             } 

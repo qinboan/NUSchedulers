@@ -5,15 +5,16 @@ import  'react-multiple-select-dropdown-lite/dist/index.css'
 // import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 
-function Filter() {
+function Filter({ setFilterOptions, account }) {
 
     const [day, setDay] = useState('')
     const [lesson, setLesson] = useState('')
     const [start, setStart] = useState('')
     const [end, setEnd] = useState('')
     const [save, setSave] = useState(false)
+    
     if (save) {
-        return <Navigate to = "/generate" />; 
+        return <Navigate to = {`/${account}/generate`} />; 
     }
 
     const  changeDays  =  val  => {
@@ -57,6 +58,18 @@ function Filter() {
         { label:  'Thursday', value:  'thursday'  },
         { label:  'Friday', value:  'friday'  },
     ]
+
+    const handleSave = () => {
+        const options = {
+            day,
+            lesson,
+            start,
+            end,
+        };
+
+        setFilterOptions(options);
+        setSave(true);
+    };
 
 
     return (
@@ -110,13 +123,7 @@ function Filter() {
             </div>
 
             <div className="save">
-                <button onClick={() => {
-                    setSave(true);
-                }}
-                >
-                    {" "}
-                    Save
-                </button>
+                <button onClick={handleSave}>Save</button>
             </div>
         </div>
     )
