@@ -82,7 +82,7 @@ function Generate({account, filterOptions}) {
 
             const timeTableDataArray = responses.map((response) => response.data);
     
-            const generatedTimetableData = generateTimetableData(timeTableDataArray, filterOptions);
+            const generatedTimetableData = generateTimetableData(timeTableDataArray, filterOptions, second);
             setTimetableData(generatedTimetableData);
             //setTimetableData(timeTableDataArray);
             await axios.post("https://nuschedulers.vercel.app/timetable", {
@@ -91,7 +91,7 @@ function Generate({account, filterOptions}) {
                 timetableData: generatedTimetableData,
             });
             setGenerated(true);
-            //alert(JSON.stringify(filterOptions))
+            //  alert(JSON.stringify(filterOptions))
 
             //return generatedTimetableData;
         } catch (error) {
