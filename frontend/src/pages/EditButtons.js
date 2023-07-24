@@ -212,7 +212,7 @@ function EditButtons({ updatedData, setUpdatedData }) {
     };
   
     return (
-        <div className="timetable">
+        <div className="timetable-edit">
             {compiledTimetable.map(({ day, classes }) => (
                 <div key={day} className="day-item">
                 <h3>{day}</h3>
