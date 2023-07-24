@@ -53,6 +53,10 @@ function Home({account}) {
         setTodo(e.target.value);
     }
 
+    if (!showTimetable) {
+        return <div>Loading...</div>;
+    }
+
     if (edit) {
         return <Navigate to = {`/${account}/edit`} />; 
     }
