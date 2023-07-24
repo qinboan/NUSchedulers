@@ -1,7 +1,7 @@
 export function generateTimetableData(timetableDataArray, filterOptions, second) {
     const classes = {};
     const timetable = {};
-    const days = {};
+    let days = [0, 0, 0, 0, 0];
     let conflict = false;
     let allpref = false;
     const avoid = filterOptions.day;
@@ -85,10 +85,70 @@ export function generateTimetableData(timetableDataArray, filterOptions, second)
                 );
             });
 
+            const checkDays = () => {
+                let sum = 0;
+                for(let i=0; i<5; i++) {
+                    sum += days[i] 
+                }
+                
+                if (sum <= 3) {
+                    return true;
+                } else {
+                    if (classInformation.day === "Monday") {
+                        if (days[0] === 1) {
+                            return true
+                        }
+                    } else if (classInformation.day === "Tuesday") {
+                        if (days[1] === 1) {
+                            return true
+                        }
+                    } else if (classInformation.day === "Wednesday") {
+                        if (days[2] === 1) {
+                            return true
+                    }
+                    } else if (classInformation.day === "Thursday") {
+                        if (days[3] === 1) {
+                            return true
+                        }
+                    } else {
+                        if (days[4] === 1) {
+                            return true
+                        }
+                    }
+                }
+
+                return false;
+                
+            }
+
+            const addDays = (day) => {
+                if (day === "Monday") {
+                    if (days[0] === 0) {
+                        days[0] = 1;
+                    }
+                } else if (day === "Tuesday") {
+                    if (days[1] === 0) {
+                        days[1] = 1;
+                    }
+                } else if (day === "Wednesday") {
+                    if (days[2] === 0) {
+                        days[2] = 1;
+                }
+                } else if (day === "Thursday") {
+                    if (days[3] === 0) {
+                        days[3] = 1;
+                    }
+                } else {
+                    if (days[4] === 0) {
+                        days[4] = 1;
+                    }
+                }
+            }
+
     
             if (timetable[classKey].schedule.length === 0) {
 
-                if ((index + 1 === arr.length && !checkPref)) {
+                if ((index + 1 === arr.length && (!checkPref || !checkDays()))) {
                     unablePref = true;
                     allpref = true;
                 } 
@@ -106,7 +166,7 @@ export function generateTimetableData(timetableDataArray, filterOptions, second)
                     }
 
                     //alert("bopes")
-
+                    addDays(classInformation.day);
                     timetable[classKey].schedule.push({
                         classNo: classInformation.classNo,
                         day: classInformation.day,
@@ -134,7 +194,37 @@ export function generateTimetableData(timetableDataArray, filterOptions, second)
                                     });
                                 });
 
+                                // const addDays = (day) => {
+                                //     if (day === "Monday") {
+                                //         if (days[0] === 0) {
+                                //             days[0] = 1;
+                                //             sum++;
+                                //         }
+                                //     } else if (day === "Tuesday") {
+                                //         if (days[1] === 0) {
+                                //             days[1] = 1;
+                                //             sum++;
+                                //         }
+                                //     } else if (day === "Wednesday") {
+                                //         if (days[2] === 0) {
+                                //             days[2] = 1;
+                                //             sum++
+                                //     }
+                                //     } else if (day === "Thursday") {
+                                //         if (days[3] === 0) {
+                                //             days[3] = 1;
+                                //             sum++
+                                //         }
+                                //     } else {
+                                //         if (days[4] === 0) {
+                                //             days[4] = 1;
+                                //             sum++
+                                //         }
+                                //     }
+                                // }
+
                                 if (!hasOverlap) {
+                                    addDays(other.day);
                                     timetable[classKey].schedule.push({
                                         classNo: other.classNo,
                                         day: other.day,
@@ -146,6 +236,7 @@ export function generateTimetableData(timetableDataArray, filterOptions, second)
                                     console.log(`No suitable class found for ${classItem.lessonType}`);
                                     //alert("Conflicting first other class");
                                     conflict = true;
+                                    addDays(other.day);
                                     timetable[classKey].schedule.push({
                                         classNo: other.classNo,
                                         day: other.day,
@@ -191,6 +282,7 @@ export function generateTimetableData(timetableDataArray, filterOptions, second)
                                 });
 
                                 if (!hasOverlap && checkPref) {
+                                    addDays(other.day);
                                     timetable[classKey].schedule.push({
                                         classNo: other.classNo,
                                         day: other.day,
@@ -206,6 +298,7 @@ export function generateTimetableData(timetableDataArray, filterOptions, second)
                     })
 
                     if (!check) {
+                        addDays(classInformation.day);
                         timetable[classKey].schedule.push({
                             classNo: classInformation.classNo,
                             day: classInformation.day,
